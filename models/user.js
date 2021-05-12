@@ -8,12 +8,13 @@ const User = new Schema({
 		type: Boolean,
 		default: false
 	},
+	name: String,
 	password: String,
 	phoneNumber: String,
 	email: String,
-	address: {
-    postal: String
-  }
+	photo: String,
+	address: String,
+	authType: String
 });
 
 User.plugin(passportLocalMongoose);

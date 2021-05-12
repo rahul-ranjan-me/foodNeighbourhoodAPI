@@ -24,7 +24,9 @@ router.post('/login', (req, res, next) => {
           email: req.body.email,
           location: req.body.location,
           phoneNumber: req.body.phoneNumber,
-          address: req.body.address
+          address: req.body.address,
+          photo: req.body.photo,
+          authType: req.body.authType
         }
       ), 'temp', (err, user) => {
         if(err) res.send({status: 'error', description: err});
@@ -39,9 +41,8 @@ router.post('/login', (req, res, next) => {
 });
 
 router.get('/logout', (req, res) => {
-  req.logout()
   res.status(200).json({
-		status: 'Bye!'
+		status: 'logout'
 	}); 
 });
 
@@ -53,14 +54,14 @@ router.route('/:userId')
 		});
 	})
 	.put(Verify.verifyOrdinaryUser, (req, res, next) => {
+    console.log('coming here')
 		var toUpdate = {};
 		for(var x in req.body){
 			if(x){
 				toUpdate[x] = req.body[x];
 			}
 		}
-		
-		User.findByIdAndUpdate(req.params.userId, { $set:
+		User.findOneAndUpdate({username: req.params.userId}, { $set:
 			toUpdate
 		},
 		{
@@ -74,9 +75,11 @@ router.route('/:userId')
         email: user.email,
         location: user.location,
         phoneNumber: user.phoneNumber,
-        address: user.address
+        address: user.address,
+        photo: user.photo,
+        authType: user.authType
 			} 
-			return res.status(200).json(dataToSend);
+      return res.status(200).json(dataToSend);
 		});
 
 	});
