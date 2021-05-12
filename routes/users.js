@@ -1,8 +1,7 @@
-var express = require('express');
-var router = express.Router();
-var User = require('../models/user');
-var Verify = require('./verify');
-var config = require('../config')
+const express = require('express')
+const router = express.Router()
+const User = require('../models/user')
+const Verify = require('./verify')
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {

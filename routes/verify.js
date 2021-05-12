@@ -1,5 +1,5 @@
-var jwt = require('jsonwebtoken');
-var config = require('../config.js');
+const jwt = require('jsonwebtoken')
+const config = require('../config.js')
 
 
 exports.getToken = (user) => {
