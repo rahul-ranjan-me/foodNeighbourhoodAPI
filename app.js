@@ -1,32 +1,30 @@
-const express = require('express');
-const path = require('path');
-const logger = require('morgan');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose')
-const config = require('./config');
+const express = require('express'),
+  path = require('path'),
+  logger = require('morgan'),
+  cookieParser = require('cookie-parser'),
+  bodyParser = require('body-parser'),
+  mongoose = require('mongoose'),
+	config = require('./config'),
+  app = express();
 
-/* MongoDB connection established here */
-mongoose.connect(config.mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
+/* DB connection secured here */
+mongoose.connect(config.mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true, 'useCreateIndex': true });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
   console.log('Connected correctly to server');
 });
-
-const index = require('./routes/index');
-const users = require('./routes/users');
-const app = express();
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+const index = require('./routes/index');
+const users = require('./routes/users');
 
 app.use('/', index);
 app.use('/users', users);
