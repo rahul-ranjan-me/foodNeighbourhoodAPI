@@ -54,8 +54,7 @@ router.route('/:userId')
 		});
 	})
 	.put(Verify.verifyOrdinaryUser, (req, res, next) => {
-    console.log('coming here')
-		var toUpdate = {};
+    var toUpdate = {};
 		for(var x in req.body){
 			if(x){
 				toUpdate[x] = req.body[x];

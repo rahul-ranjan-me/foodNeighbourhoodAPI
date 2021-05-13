@@ -12,6 +12,7 @@
     "express": "~4.15.2",
     "jade": "~1.11.0",
     "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
     "mongoose": "^5.12.7",
     "morgan": "~1.8.1",
     "passport-local-mongoose": "^6.1.0",
