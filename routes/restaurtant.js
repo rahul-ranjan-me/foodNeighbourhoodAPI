@@ -75,13 +75,13 @@ router.route('/search')
           }
     
     Restaurant.find(filter, (err, restaurants) => {
-      let details = []
-      restaurants.forEach(restaurant => {
-        details.push(restaurant.details)
-      })
       if(all) {
         res.json(restaurants);
       } else {
+        let details = []
+        restaurants.forEach(restaurant => {
+          details.push(restaurant.details)
+        })
         res.json(details);
       }
       
