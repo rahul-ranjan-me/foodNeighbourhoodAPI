@@ -3,6 +3,7 @@ const router = express.Router()
 const Restaurant = require('../models/restaurant')
 const Verify = require('./verify')
 const _ = require('lodash')
+const restaurant = require('../models/restaurant')
 
 /* GET users listing. */
 router.route('/')
@@ -49,7 +50,6 @@ router.route('/id/:chefId')
 
 router.route('/top10')
   .get(Verify.verifyOrdinaryUser, (req, res, next) => {
-    console.log('coming here')
     Restaurant.find({}, (err, restaurant) => {
       if(err) res.send({status: 'error', description: err});
       const sorted = _.orderBy(restaurant, ['details.ratingUp'], ['desc'])
@@ -58,6 +58,33 @@ router.route('/top10')
         topRestaurant.push(restaurant.details)
       })
       res.json(topRestaurant);
+    });
+  })
+
+router.route('/search')
+  .get(Verify.verifyOrdinaryUser, (req, res, next) => {
+    const { q, all } = req.query,
+          key = `.*${q}.*`
+          filter = {
+            $or: [
+              { 'details.tagged' : {"$regex": key, "$options": "i" } },
+              { 'details.name' : {"$regex": key, "$options": "i" } },
+              { 'details.address' : {"$regex": key, "$options": "i"} },
+              { 'menu' : { "$elemMatch": { name: { "$regex": key, "$options": "i" } } } }
+            ]
+          }
+    
+    Restaurant.find(filter, (err, restaurants) => {
+      let details = []
+      restaurants.forEach(restaurant => {
+        details.push(restaurant.details)
+      })
+      if(all) {
+        res.json(restaurants);
+      } else {
+        res.json(details);
+      }
+      
     });
   })
 

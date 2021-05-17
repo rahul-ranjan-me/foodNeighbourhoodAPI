@@ -10,7 +10,8 @@ const Restaurant = new Schema({
     chefId: String,
     ratingUp: Number,
     ratingDown: Number,
-    deliveryFee: Number
+    deliveryFee: Number,
+    tagged: String,
   },
   menu: [
     {
