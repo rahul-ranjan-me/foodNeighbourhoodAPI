@@ -88,4 +88,23 @@ router.route('/search')
     });
   })
 
+router.route('/search/tagged')
+  .get(Verify.verifyOrdinaryUser, (req, res, next) => {
+    const { q } = req.query,
+          key = `.*${q}.*`
+          filter = {
+            $or: [
+              { 'details.tagged' : {"$regex": key, "$options": "i" } },
+            ]
+          }
+    
+    Restaurant.find(filter, (err, restaurants) => {
+      let details = []
+      restaurants.forEach(restaurant => {
+        details.push(restaurant.details)
+      })
+      res.json(details);
+    });
+  })
+
 module.exports = router;
