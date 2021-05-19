@@ -3,7 +3,6 @@ const router = express.Router()
 const Restaurant = require('../models/restaurant')
 const Verify = require('./verify')
 const _ = require('lodash')
-const restaurant = require('../models/restaurant')
 
 /* GET users listing. */
 router.route('/')
