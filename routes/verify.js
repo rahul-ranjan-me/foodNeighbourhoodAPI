@@ -8,13 +8,13 @@ exports.getToken = (user) => {
 };
 
 exports.verifyOrdinaryUser = (req, res, next) => {
-  var token =
+  const token =
     req.body.token || req.query.token || req.headers["x-access-token"];
 
   if (token) {
     jwt.verify(token, config.secretKey, (err, decoded) => {
       if (err) {
-        var err = new Error("You are not authenticated!");
+        const err = new Error("You are not authenticated!");
         err.status = 401;
         if (err) res.send({ status: "error", description: err });
       } else {
@@ -23,7 +23,7 @@ exports.verifyOrdinaryUser = (req, res, next) => {
       }
     });
   } else {
-    var err = new Error("No token provided!");
+    const err = new Error("No token provided!");
     err.status = 403;
     if (err) res.send({ status: "error", description: err });
   }
