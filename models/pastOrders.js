@@ -1,5 +1,5 @@
-const mongoose = require('mongoose'),
-	Schema = mongoose.Schema
+const mongoose = require("mongoose"),
+  Schema = mongoose.Schema;
 
 const PastOrders = new Schema({
   username: String,
@@ -8,17 +8,17 @@ const PastOrders = new Schema({
       status: String,
       restaurantName: String,
       date: String,
-      amount: Number, 
+      amount: Number,
       chefId: String,
       orders: [
         {
           itemName: String,
           quantity: Number,
-          itemId: String
-        }
-      ]
-    }
-  ]
+          itemId: String,
+        },
+      ],
+    },
+  ],
 });
 
-module.exports = mongoose.model('PastOrders', PastOrders);
+module.exports = mongoose.model("PastOrders", PastOrders);
